@@ -17,6 +17,8 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
 import numpy as np
 from sklearn.model_selection import GridSearchCV
+from sklearn.tree import plot_tree
+
 
 
 #importing training dataset and target files
@@ -105,7 +107,20 @@ print(f'Mean Squared Error: {mse:.2f}')
 #print(validation_y)
 #print(preds)
 print(f'r_squared: {r2:.3f}')
+print(f"Tree Depth: {model.get_depth()}")
 
+plt.figure(figsize=(60,20))
+plot_tree(
+    model,
+    feature_names=[str(i) for i in range(train_x.shape[1])],
+    filled=True,
+    rounded=True,
+    impurity=False,
+    proportion=False,
+    precision=2,
+    #max_depth=9  # optional: to only show top x levels
+)
+plt.show()
 
 slope, intercept = np.polyfit(preds, validation_y, 1)
 regression_x = np.array([min(preds), max(preds)])
